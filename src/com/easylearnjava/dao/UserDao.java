@@ -93,6 +93,15 @@ public class UserDao {
 		//select this_.user_id as user1_0_0_, this_.user_name as user2_0_0_, this_.user_password as user3_0_0_ from user this_ where this_.user_id=?
 		UserDto userObj = (UserDto)crit.uniqueResult();
 		System.out.println("user name : " + userObj.getUname());
+		System.out.println();
+		
+		Criteria crta = session.createCriteria(UserDto.class);
+		crta.add(Restrictions.like("uname", "%a%"));
+		crta.add(Restrictions.le("uid", 10));
+		//select this_.user_id as user1_0_0_, this_.user_name as user2_0_0_, this_.user_password as user3_0_0_ from user this_ where this_.user_name like ? and this_.user_id<=?
+		List<UserDto> userList = crta.list();
+		printDetails(userList);
+		System.out.println();
 		
 	}
 	
