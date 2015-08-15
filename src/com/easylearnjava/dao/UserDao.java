@@ -73,17 +73,26 @@ public class UserDao {
 		}
 		System.out.println();
 		
+		System.out.println("Using Criteria in hibernate...");
 		Criteria cr = session.createCriteria(UserDto.class);
 		//select this_.user_id as user1_0_0_, this_.user_name as user2_0_0_, this_.user_password as user3_0_0_ from user this_
 		List<UserDto> DtoObjs = cr.list();
 		printDetails(DtoObjs);
+		System.out.println();
 		
+		System.out.println("Using Criteria with restrictions in hibernate...");
 		Criteria crt = session.createCriteria(UserDto.class);
-		cr.add(Restrictions.eq("uid", 2));
+		crt.add(Restrictions.eq("uid", 2));
 		//select this_.user_id as user1_0_0_, this_.user_name as user2_0_0_, this_.user_password as user3_0_0_ from user this_ where this_.user_id=?
-		List<UserDto> results = cr.list();
-		//UserDto results = (UserDto)cr.uniqueResult();
+		List<UserDto> results = crt.list();
 		printDetails(results);
+		System.out.println();
+		
+		Criteria crit = session.createCriteria(UserDto.class);
+		crit.add(Restrictions.eq("uid", 2));
+		//select this_.user_id as user1_0_0_, this_.user_name as user2_0_0_, this_.user_password as user3_0_0_ from user this_ where this_.user_id=?
+		UserDto userObj = (UserDto)crit.uniqueResult();
+		System.out.println("user name : " + userObj.getUname());
 		
 	}
 	
